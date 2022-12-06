@@ -17,7 +17,7 @@ fn parse_pairs(line: &str) -> (Range, Range) {
     return (Range::from_str(left), Range::from_str(right));
 }
 
-fn solution_part1(input: &str) -> i32 {
+fn solution_part1(input: String) -> i32 {
     let mut result: i32 = 0;
     for line in input.lines() {
         let (left, right) = parse_pairs(line);
@@ -28,7 +28,7 @@ fn solution_part1(input: &str) -> i32 {
     return result;
 }
 
-fn solution_part2(input: &str) -> i32 {
+fn solution_part2(input: String) -> i32 {
     let mut result: i32 = 0;
     for line in input.lines() {
         let (left, right) = parse_pairs(line);
@@ -52,7 +52,7 @@ mod tests {
 
     #[test]
     fn basic_example() {
-        let input = "2-4,6-8\n2-3,4-5\n5-7,7-9\n2-8,3-7\n6-6,4-6\n2-6,4-8";
+        let input = "2-4,6-8\n2-3,4-5\n5-7,7-9\n2-8,3-7\n6-6,4-6\n2-6,4-8".to_string();
         let expected = 2;
         let result = solution_part1(input);
         assert_eq!(result, expected);
@@ -61,18 +61,12 @@ mod tests {
     #[test]
     fn answer_part1() {
         let input = fs::read_to_string("inputs/day_4.txt").unwrap();
-        println!(
-            "Answer to part 1 of day 4: {:#?}",
-            solution_part1(input.as_str())
-        );
+        println!("Answer to part 1 of day 4: {:#?}", solution_part1(input));
     }
 
     #[test]
     fn answer_part2() {
         let input = fs::read_to_string("inputs/day_4.txt").unwrap();
-        println!(
-            "Answer to part 2 of day 4: {:#?}",
-            solution_part2(input.as_str())
-        );
+        println!("Answer to part 2 of day 4: {:#?}", solution_part2(input));
     }
 }
