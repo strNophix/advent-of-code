@@ -1,6 +1,3 @@
-
-
-
 #[derive(Debug)]
 struct Range(i32, i32);
 
