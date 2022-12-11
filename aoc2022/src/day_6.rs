@@ -37,13 +37,13 @@ mod tests {
 
     #[test]
     fn answer_part1() {
-        let input = fs::read_to_string("inputs/day_5.txt").unwrap();
+        let input = fs::read_to_string("inputs/day_6.txt").unwrap();
         println!("Answer to part 1 of day 6: {:#?}", solution(input, 4));
     }
 
     #[test]
     fn answer_part2() {
-        let input = fs::read_to_string("inputs/day_5.txt").unwrap();
+        let input = fs::read_to_string("inputs/day_6.txt").unwrap();
         println!("Answer to part 2 of day 6: {:#?}", solution(input, 14));
     }
 }
