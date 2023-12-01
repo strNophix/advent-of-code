@@ -2,6 +2,27 @@ import typing
 
 from utils import load_input
 
+DIGIT_LOOKUP_TABLE = {
+    "o": ["one"],
+    "t": ["two", "three"],
+    "f": ["four", "five"],
+    "s": ["six", "seven"],
+    "e": ["eight"],
+    "n": ["nine"],
+}
+
+DIGIT_CONVERSION_TABLE = {
+    "one": "1",
+    "two": "2",
+    "three": "3",
+    "four": "4",
+    "five": "5",
+    "six": "6",
+    "seven": "7",
+    "eight": "8",
+    "nine": "9",
+}
+
 
 def get_first_digit(line: str) -> str:
     for char in line:
@@ -11,32 +32,8 @@ def get_first_digit(line: str) -> str:
     return ""
 
 
-def compress_digit(char: str) -> str:
-    translation_table = {
-        "one": "1",
-        "two": "2",
-        "three": "3",
-        "four": "4",
-        "five": "5",
-        "six": "6",
-        "seven": "7",
-        "eight": "8",
-        "nine": "9",
-    }
-    return translation_table[char]
-
-
 def get_spelled_digit_prefix(line: str) -> typing.Optional[str]:
-    digit_lookup_table = {
-        "o": ["one"],
-        "t": ["two", "three"],
-        "f": ["four", "five"],
-        "s": ["six", "seven"],
-        "e": ["eight"],
-        "n": ["nine"],
-    }
-
-    if options := digit_lookup_table.get(line[0]):
+    if options := DIGIT_LOOKUP_TABLE.get(line[0]):
         for option in options:
             if line.startswith(option):
                 return option
@@ -44,16 +41,23 @@ def get_spelled_digit_prefix(line: str) -> typing.Optional[str]:
     return None
 
 
-def parse_norm_digits(line: str) -> list[str]:
-    result: list[str] = []
-    for idx, char in enumerate(line):
+def compress_digit(digit: str) -> str:
+    return DIGIT_CONVERSION_TABLE[digit]
+
+
+def parse_first_digit(line: str, backwards: bool = False) -> str:
+    iterator = range(len(line) - 1, -1, -1) if backwards else range(len(line))
+
+    for i in iterator:
+        char = line[i]
+
         if char.isdigit():
-            result.append(char)
+            return char
 
-        if digit := get_spelled_digit_prefix(line[idx:]):
-            result.append(compress_digit(digit))
+        if digit := get_spelled_digit_prefix(line[i:]):
+            return compress_digit(digit)
 
-    return result
+    return ""
 
 
 def solution_part1(input_data: str) -> int:
@@ -68,8 +72,9 @@ def solution_part1(input_data: str) -> int:
 def solution_part2(input_data: str) -> int:
     total_sum = 0
     for line in input_data.splitlines():
-        digits = parse_norm_digits(line)
-        total_sum += int(digits[0] + digits[-1])
+        first_digit = parse_first_digit(line)
+        last_digit = parse_first_digit(line, backwards=True)
+        total_sum += int(first_digit + last_digit)
 
     return total_sum
 
@@ -79,10 +84,11 @@ def test_get_first_digit():
     assert get_first_digit("02") == "0"
 
 
-def test_parse_norm_digits():
-    assert parse_norm_digits("oooneeee") == ["1"]
-    assert parse_norm_digits("twothree") == ["2", "3"]
-    assert parse_norm_digits("8aone9") == ["8", "1", "9"]
+def test_parse_first_digit():
+    assert parse_first_digit("oooneeee") == "1"
+    assert parse_first_digit("2three") == "2"
+    assert parse_first_digit("8aone", backwards=True) == "1"
+    assert parse_first_digit("8aone9", backwards=True) == "9"
 
 
 def test_part1_example():
