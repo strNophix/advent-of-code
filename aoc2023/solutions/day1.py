@@ -102,7 +102,7 @@ def test_part2_example():
 
 
 def main():
-    input_data = load_input("day1")
+    input_data = load_input("day_1")
     print(f"Answer to day 1 part 1: {solution_part1(input_data)}")
     print(f"Answer to day 1 part 2: {solution_part2(input_data)}")
 
