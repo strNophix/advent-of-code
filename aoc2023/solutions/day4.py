@@ -1,6 +1,4 @@
-import typing
 import re
-from collections import defaultdict
 
 from utils import load_input
 
