@@ -26,6 +26,7 @@ def solution_part1(input_data: str) -> int:
     time = [int(num) for num in re.findall(r"\d+", lines[0])]
     distance = [int(num) for num in re.findall(r"\d+", lines[1])]
 
+    # Assuming there is always at least one way to beat the current record
     result = 1
     for t, d in zip(time, distance):
         result *= find_beat_count(t, d)
